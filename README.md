@@ -1,6 +1,7 @@
 # QA Automation Portfolio - Naufal Fadhiil
-![Automation](https://img.shields.io/badge/QA-Automation-green)
-
+<p align="center">
+  <img src="https://img.shields.io/badge/QA-Automation-green" />
+</p>
 Repository ini berisi kumpulan project Automation Testing yang saya kerjakan menggunakan Python dan Selenium sebagai bagian dari pengembangan keterampilan QA Automation Engineer.
 
 Fokus utama repository ini adalah:
