@@ -7,11 +7,13 @@ Fokus utama repository ini adalah:
 - **Element interaction**
 - **Basic test scenario automation**
 - **Handling alerts dan navigation**
+</br>
 
 ## 🛠 Tech Stack
 - Python & Selenium WebDriver
 - ChromeDriver
 - VS Code
+</br>
 
 ## 📂 Project Structure
 
@@ -34,6 +36,7 @@ python belajarselenium.py
 Note: Pastikan ChromeDriver sudah sesuai dengan versi Chrome.
 
 
+</br>
 
 📌 Development Notes
 ---
@@ -49,7 +52,8 @@ Ke depan repository ini akan dikembangkan dengan:
 **API automation**
 
 **CI/CD integration**
-
+</br>
 ___
+</br>
 ✍️ Author: Naufal Fadhiil </br>
 📅 Last Updated: February 2026
