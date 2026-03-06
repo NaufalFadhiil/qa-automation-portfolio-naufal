@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions as EC
 
 import time
 
@@ -10,6 +12,7 @@ options.add_experimental_option("detach", True)
 driver = webdriver.Chrome(options = options)
 
 driver.get("https://www.geeksforgeeks.org/")
+driver.maximize_window()
 
 # Wait for the page to load
 wait = WebDriverWait(driver, 10)
@@ -41,6 +44,19 @@ driver.switch_to.window(all_tabs[-1])
 
 time.sleep(3)
 driver.switch_to.window(main_tab)
+
+time.sleep(3)
+
+# Navigate to DevOps page via Tutorials dropdown menu
+tutorials = WebDriverWait(driver,10).until(
+    EC.visibility_of_element_located((By.XPATH, "//div[text()='Tutorials']"))
+)
+ActionChains(driver).move_to_element(tutorials).perform()
+
+devops = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "DevOps")))
+devops.click() 
+
+driver.get(home_url)
 
 # QUIT
 time.sleep(3)
