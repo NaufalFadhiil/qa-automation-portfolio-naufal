@@ -1,6 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 import time
 
@@ -44,7 +47,21 @@ year.send_keys("2005")
 day = driver.find_element(By.XPATH,"//div[contains(@class,'react-datepicker__day') and text()='22']")
 day.click()
 
-# TODO: Implement Subjects field
+# Subjects
+subjects = ["Computer Science", "Maths", "English", "History"]
+
+subject_input = driver.find_element(By.ID, "subjectsInput")
+
+for sub in subjects:
+    subject_input.send_keys(sub)
+
+    WebDriverWait(driver, 10).until(
+        EC.visibility_of_element_located((By.CLASS_NAME, "subjects-auto-complete__menu"))
+    )
+    subject_input.send_keys(Keys.ENTER)
+time.sleep(2)
+
+
 # TODO: Implement Hobbies field
 # TODO: Implement Picture field
 # TODO: Implement Address field
@@ -52,4 +69,4 @@ day.click()
 # TODO: Implement City field
 
 time.sleep(5)
-driver.quit()
+# driver.quit()
