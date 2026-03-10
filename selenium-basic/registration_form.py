@@ -72,7 +72,11 @@ selected_hobbies = ["Sports", "Reading", "Music"]
 for hobby in selected_hobbies:
     driver.find_element(By.ID, hobby_map[hobby]).click()
 
-# TODO: Implement Picture field
+# Upload Picture
+picture = driver.find_element(By.ID, "uploadPicture")
+picture.send_keys("C:\Penyimpanan Utama\Downloads\sampleFile.jpeg")
+
+
 # TODO: Implement Address field
 # TODO: Implement State field
 # TODO: Implement City field
