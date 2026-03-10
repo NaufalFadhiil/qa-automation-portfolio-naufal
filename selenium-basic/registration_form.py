@@ -59,14 +59,23 @@ for sub in subjects:
         EC.visibility_of_element_located((By.CLASS_NAME, "subjects-auto-complete__menu"))
     )
     subject_input.send_keys(Keys.ENTER)
-time.sleep(2)
 
+# Hobbies 
+hobby_map = {
+    "Sports": "hobbies-checkbox-1",
+    "Reading": "hobbies-checkbox-2",
+    "Music": "hobbies-checkbox-3"
+}
 
-# TODO: Implement Hobbies field
+selected_hobbies = ["Sports", "Reading", "Music"]
+
+for hobby in selected_hobbies:
+    driver.find_element(By.ID, hobby_map[hobby]).click()
+
 # TODO: Implement Picture field
 # TODO: Implement Address field
 # TODO: Implement State field
 # TODO: Implement City field
 
 time.sleep(5)
-# driver.quit()
+driver.quit()
