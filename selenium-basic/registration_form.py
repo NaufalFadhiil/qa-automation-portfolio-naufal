@@ -90,6 +90,9 @@ city = driver.find_element(By.ID, "react-select-4-input")
 city.send_keys("Delhi")
 city.send_keys(Keys.ENTER)
 
-# TODO: Submit form
+# Submit Button
+submit = driver.find_element(By.ID, "submit")
+submit.click()
+
 time.sleep(10)
 driver.quit()
