@@ -78,8 +78,14 @@ picture.send_keys("C:\Penyimpanan Utama\Downloads\sampleFile.jpeg")
 
 
 # TODO: Implement Address field
-# TODO: Implement State field
-# TODO: Implement City field
+# State 
+state = driver.find_element(By.ID, "react-select-3-input")
+state.send_keys("NCR")
+state.send_keys(Keys.ENTER)
 
+# City
+city = driver.find_element(By.ID, "react-select-4-input")
+city.send_keys("Delhi")
+city.send_keys(Keys.ENTER)
 time.sleep(5)
-driver.quit()
+#driver.quit()
