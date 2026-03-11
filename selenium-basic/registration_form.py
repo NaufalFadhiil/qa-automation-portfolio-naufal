@@ -16,7 +16,7 @@ driver.implicitly_wait(10)
 driver.get("https://demoqa.com/automation-practice-form")
 driver.maximize_window()
 
-time.sleep(3)
+time.sleep(1)
 
 # Name input
 firstName = driver.find_element(By.ID, "firstName")
@@ -76,8 +76,10 @@ for hobby in selected_hobbies:
 picture = driver.find_element(By.ID, "uploadPicture")
 picture.send_keys("C:\Penyimpanan Utama\Downloads\sampleFile.jpeg")
 
+# Address 
+addres = driver.find_element(By.ID, "currentAddress")
+addres.send_keys("Jl. Cikutra No. 22, RT 05/RW 02, Kota Bandung, Jawa Barat.")
 
-# TODO: Implement Address field
 # State 
 state = driver.find_element(By.ID, "react-select-3-input")
 state.send_keys("NCR")
@@ -87,5 +89,7 @@ state.send_keys(Keys.ENTER)
 city = driver.find_element(By.ID, "react-select-4-input")
 city.send_keys("Delhi")
 city.send_keys(Keys.ENTER)
-time.sleep(5)
-#driver.quit()
+
+# TODO: Submit form
+time.sleep(10)
+driver.quit()
