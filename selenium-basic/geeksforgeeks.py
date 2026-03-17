@@ -22,8 +22,19 @@ main_tab = driver.current_window_handle
 
 time.sleep(3)
 
+# Navigate to DevOps page via Tutorials dropdown menu
+tutorials = WebDriverWait(driver,10).until(
+    EC.visibility_of_element_located((By.XPATH, "//div[text()='Tutorials']"))
+)
+ActionChains(driver).move_to_element(tutorials).perform()
+
+devops = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "DevOps")))
+devops.click() 
+
+driver.get(home_url)
+
 # Locate the input field for search text and enter
-search = driver.find_element(By.CLASS_NAME, "HomePageSearchContainer_homePageSearchContainer_container_input__1LS0r")
+search = wait.until(EC.presence_of_element_located((By.XPATH, "//input[@type='text']")))
 search.send_keys("Python")
 search.send_keys(Keys.ENTER)
 
@@ -35,8 +46,17 @@ driver.get(home_url)
 
 time.sleep(3)
 
+# Click DS, ML & AI
+ds_ai = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "DS, ML & AI"))) 
+ds_ai.click()
+
+time.sleep(10)
+driver.get(home_url)
+
+time.sleep(3)
 # Click on the first link
-driver.find_element(By.XPATH, '//*[@id="comp"]/div[2]/div[2]/div/div[2]/a[5]/button').click()
+btn = driver.find_element(By.XPATH, "//button[contains(text(),'Explore')]")
+btn.click()
 
 wait.until(lambda d: len(d.window_handles) > 1)
 all_tabs = driver.window_handles
@@ -46,17 +66,6 @@ time.sleep(3)
 driver.switch_to.window(main_tab)
 
 time.sleep(3)
-
-# Navigate to DevOps page via Tutorials dropdown menu
-tutorials = WebDriverWait(driver,10).until(
-    EC.visibility_of_element_located((By.XPATH, "//div[text()='Tutorials']"))
-)
-ActionChains(driver).move_to_element(tutorials).perform()
-
-devops = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.LINK_TEXT, "DevOps")))
-devops.click() 
-
-driver.get(home_url)
 
 # QUIT
 time.sleep(3)
