@@ -50,7 +50,7 @@ time.sleep(3)
 ds_ai = wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "DS, ML & AI"))) 
 ds_ai.click()
 
-time.sleep(10)
+wait.until(EC.presence_of_element_located((By.TAG_NAME, "h1")))
 driver.get(home_url)
 
 time.sleep(3)
