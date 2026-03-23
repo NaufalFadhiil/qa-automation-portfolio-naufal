@@ -3,7 +3,7 @@ from booking.booking import Booking
 bot = Booking()
 bot.web_page()
 bot.exit_modals()
-bot.change_currency("USD")
+bot.change_currency(currency="IDR")
 
 input("Press enter to close...")
 bot.quit()

@@ -1,3 +1,4 @@
+import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -28,11 +29,20 @@ class Booking(webdriver.Chrome):
             print(f"Error: {e}")
             pass
 
-    def change_currency(self, currency):
+    def change_currency(self, currency = "IDR"):
         try:
-            change_currency = self.find_element(By.CSS_SELECTOR, '[data-testid="header-currency-picker-trigger"]')
+            change_currency = self.find_element(
+            By.CSS_SELECTOR,
+            '[data-testid="header-currency-picker-trigger"]'
+            )
             change_currency.click()
-            print('Currency clicked')
-        except Exception as e:
-            print(f"Error: {e}")
+
+            time.sleep(2),
             
+            quit_currency = WebDriverWait(self, 10).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-testid="selection-modal-close"]'))) 
+            quit_currency.click()
+       
+        except:
+            TimeoutError
+            pass
