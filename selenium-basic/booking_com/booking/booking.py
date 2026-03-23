@@ -44,3 +44,10 @@ class Booking(webdriver.Chrome):
             EC.element_to_be_clickable((By.ID, 'autocomplete-result-0')
         )) 
         first_result.click()
+
+    def select_dates(self, check_in_date, check_out_date):
+        check_in_element = self.find_element(By.CSS_SELECTOR, f'[data-date="{check_in_date}"]')
+        check_in_element.click()
+
+        check_out_element = self.find_element(By.CSS_SELECTOR, f'[data-date="{check_out_date}"]')
+        check_out_element.click()
