@@ -39,10 +39,14 @@ class Booking(webdriver.Chrome):
         search_field.clear() 
         search_field.send_keys(place_to_go)
 
-        first_result = WebDriverWait(self, 5).until(
-            EC.element_to_be_clickable((By.ID, 'autocomplete-result-0')
-        )) 
-        first_result.click()
+        first_result = WebDriverWait(self, 10).until(
+            EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[data-testid="autocomplete-result"]')
+        ))
+
+        for result in first_result:
+            if place_to_go.lower() in result.text.lower():
+                result.click()
+                break
 
     def select_dates(self, check_in_date, check_out_date):
         check_in_element = self.find_element(By.CSS_SELECTOR, f'[data-date="{check_in_date}"]')
@@ -79,6 +83,10 @@ class Booking(webdriver.Chrome):
             if current_value == adults:
                 break
             increase_button.click()
+
+    # TODO: implement children
+
+    # TODO: implement rooms
     
     # TODO: implement pets switch
     # def click_pets(self):
@@ -86,3 +94,5 @@ class Booking(webdriver.Chrome):
     #         EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-testid="pets"]')
     #     )) 
     #     pets.click()
+
+    # TODO: implement done button
