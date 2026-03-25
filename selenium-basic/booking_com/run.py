@@ -6,6 +6,7 @@ bot.exit_modals()
 bot.change_currency(currency="IDR")
 bot.select_place_to_go('Jakarta')
 bot.select_dates('2026-03-23', '2026-03-25')
+bot.select_guest()
 
 input("Press enter to close...")
 bot.quit()
