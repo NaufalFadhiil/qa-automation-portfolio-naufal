@@ -56,7 +56,7 @@ class Booking(webdriver.Chrome):
         check_out_element.click()
         time.sleep(1)
 
-    def select_guest(self, adults):
+    def select_guest(self, adults, children):
         selection_element = WebDriverWait(self, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='occupancy-config']"))
         )
@@ -84,7 +84,29 @@ class Booking(webdriver.Chrome):
                 break
             increase_button.click()
 
-    # TODO: implement children
+        child_container = WebDriverWait(self, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//input[@id='group_children']/.."))
+        )
+
+        child_value_element = self.find_element(By.ID, 'group_children')
+
+        buttons = child_container.find_elements(By.TAG_NAME, "button")
+        decrease_button = buttons[0]
+        increase_button = buttons[1]
+
+        while True:
+            current_value = int(child_value_element.get_attribute('value'))
+            if current_value == 0:
+                break
+            decrease_button.click()
+        
+        while True:
+            current_value = int(child_value_element.get_attribute('value'))
+            if current_value == children:
+                break
+            increase_button.click()
+    
+    # TODO: children age dropdown
 
     # TODO: implement rooms
     
