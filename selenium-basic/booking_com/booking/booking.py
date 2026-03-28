@@ -56,7 +56,7 @@ class Booking(webdriver.Chrome):
         check_out_element.click()
         time.sleep(1)
 
-    def select_guest(self, adults, children):
+    def select_guest(self, adults, children, children_age):
         selection_element = WebDriverWait(self, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='occupancy-config']"))
         )
@@ -105,11 +105,42 @@ class Booking(webdriver.Chrome):
             if current_value == children:
                 break
             increase_button.click()
-    
-    # TODO: children age dropdown
 
+        # Children Age Selection
+        if children:
+            selection_element = WebDriverWait(self, 10).until(
+                EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='occupancy-config']"))
+            )
+            selection_element.click()
+
+            age_selects = WebDriverWait(self, 10).until(
+                EC.presence_of_all_elements_located((By.NAME, 'age'))
+            )
+
+            assert len(age_selects) == children
+
+            for i in range(children):
+                age_selects = WebDriverWait(self, 10).until(
+                    EC.presence_of_all_elements_located((By.NAME, 'age'))
+                )
+
+                element = age_selects[i]
+
+                WebDriverWait(self, 10).until(
+                    EC.element_to_be_clickable(element)
+                )
+
+                element.click()
+
+                Select(element).select_by_value(str(children_age[i]))
+
+                WebDriverWait(self, 5).until(
+                    lambda d: age_selects[i].get_attribute("value") == str(children_age[i])
+                )
+
+                time.sleep(1)
     # TODO: implement rooms
-    
+
     # TODO: implement pets switch
     # def click_pets(self):
     #     pets = WebDriverWait(self, 5).until(
