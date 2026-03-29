@@ -56,7 +56,7 @@ class Booking(webdriver.Chrome):
         check_out_element.click()
         time.sleep(1)
 
-    def select_guest(self, adults, children, children_age):
+    def select_guest(self, adults, children, children_age, rooms):
         selection_element = WebDriverWait(self, 10).until(
             EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='occupancy-config']"))
         )
@@ -111,7 +111,6 @@ class Booking(webdriver.Chrome):
             selection_element = WebDriverWait(self, 10).until(
                 EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='occupancy-config']"))
             )
-            selection_element.click()
 
             age_selects = WebDriverWait(self, 10).until(
                 EC.presence_of_all_elements_located((By.NAME, 'age'))
@@ -139,7 +138,26 @@ class Booking(webdriver.Chrome):
                 )
 
                 time.sleep(1)
-    # TODO: implement rooms
+
+        rooms_input = WebDriverWait(self, 10).until(
+            EC.presence_of_element_located((By.ID, "no_rooms"))
+        )
+
+        rooms_container = rooms_input.find_element(By.XPATH, "./ancestor::div[1]")
+
+        buttons = rooms_container.find_elements(By.TAG_NAME, "button")
+        decrease_button = buttons[0]
+        increase_button = buttons[1]
+
+        get_value = lambda: int(rooms_input.get_attribute("value"))
+
+        while get_value() > 1:
+            decrease_button.click()
+            time.sleep(0.3)
+
+        while get_value() < rooms:
+            increase_button.click()
+            time.sleep(0.3)
 
     # TODO: implement pets switch
     # def click_pets(self):
