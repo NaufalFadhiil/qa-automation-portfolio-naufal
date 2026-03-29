@@ -165,4 +165,9 @@ class Booking(webdriver.Chrome):
         )
         toggle.click()
 
-    # TODO: implement done button
+    def done_button(self):
+        done_button = WebDriverWait(self, 10).until(
+            EC.element_to_be_clickable((By.XPATH, '//button[.//span[text()="Done"]]'))
+        )
+        time.sleep(3)
+        done_button.click()
