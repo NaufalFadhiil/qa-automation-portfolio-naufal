@@ -159,11 +159,10 @@ class Booking(webdriver.Chrome):
             increase_button.click()
             time.sleep(0.3)
 
-    # TODO: implement pets switch
-    # def click_pets(self):
-    #     pets = WebDriverWait(self, 5).until(
-    #         EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-testid="pets"]')
-    #     )) 
-    #     pets.click()
+    def pets_toggle(self):
+        toggle = WebDriverWait(self, 5).until(
+            EC.presence_of_element_located((By.XPATH, '//label[@for="pets"]'))
+        )
+        toggle.click()
 
     # TODO: implement done button
