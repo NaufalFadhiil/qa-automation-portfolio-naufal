@@ -171,3 +171,9 @@ class Booking(webdriver.Chrome):
         )
         time.sleep(3)
         done_button.click()
+    
+    def click_search(self):
+        search_button = WebDriverWait(self, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[type="submit"]'))
+        )
+        search_button.click()
