@@ -10,6 +10,7 @@ bot.select_guest(adults= 4, children= 3, children_age= [8, 15, 17], rooms= 3)
 bot.pets_toggle()
 bot.done_button()
 bot.click_search()
+bot.apply_filtration()
 
 input("Press enter to close...")
-bot.quit() 
+bot.quit()

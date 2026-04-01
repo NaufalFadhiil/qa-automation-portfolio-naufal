@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from booking.booking_filtration import BookingFiltration
 
 class Booking(webdriver.Chrome):
     def __init__(self, teardown=False):
@@ -169,7 +170,7 @@ class Booking(webdriver.Chrome):
         done_button = WebDriverWait(self, 10).until(
             EC.element_to_be_clickable((By.XPATH, '//button[.//span[text()="Done"]]'))
         )
-        time.sleep(3)
+        time.sleep(1)
         done_button.click()
     
     def click_search(self):
@@ -177,3 +178,7 @@ class Booking(webdriver.Chrome):
             EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[type="submit"]'))
         )
         search_button.click()
+
+    def apply_filtration(self):
+        filtration = BookingFiltration(self)
+        filtration.apply_star_rating(1)
