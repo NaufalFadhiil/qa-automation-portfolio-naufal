@@ -13,4 +13,17 @@ class BookingFiltration:
         )
         star_option.click()
     
-    # TODO: implement sort by price
+    def sort_lowest_price(self):
+        sort_element = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, '[data-testid="sorters-dropdown-trigger"]')
+            )
+        )
+        sort_element.click()
+        
+        sort_price = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, '[data-id="price"]')
+            )
+        )
+        sort_price.click()

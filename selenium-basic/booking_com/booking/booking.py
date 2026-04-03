@@ -181,4 +181,6 @@ class Booking(webdriver.Chrome):
 
     def apply_filtration(self):
         filtration = BookingFiltration(self)
-        filtration.apply_star_rating(1)
+        filtration.apply_star_rating(5)
+        time.sleep(4)
+        filtration.sort_lowest_price()
