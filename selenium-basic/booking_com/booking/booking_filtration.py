@@ -27,3 +27,5 @@ class BookingFiltration:
             )
         )
         sort_price.click()
+    
+    #TODO: Implement click hotels
