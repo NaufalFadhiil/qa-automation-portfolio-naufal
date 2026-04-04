@@ -14,9 +14,12 @@ children = int(input("How many children? "))
 
 children_age = []
 for i in range(children):
-    age = int(input(f"What is child {i+1} age? "))
-    children_age.append(age)
-    # TODO: Throw exception for children age > 17 < 18
+    while True:
+        age = int(input(f"What is child {i+1} age? "))
+        if 0 <= age <= 17:
+            children_age.append(age)
+            break
+        print("Invalid Age. Children age must be between 0-17")
 
 rooms = int(input("How many rooms? "))
 
