@@ -184,3 +184,4 @@ class Booking(webdriver.Chrome):
         filtration.apply_star_rating(5)
         time.sleep(4)
         filtration.sort_lowest_price()
+        filtration.click_first_hotel()

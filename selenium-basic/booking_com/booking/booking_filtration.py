@@ -28,4 +28,11 @@ class BookingFiltration:
         )
         sort_price.click()
     
-    #TODO: Implement click hotels
+    #TODO: Implement Open top hotel result 
+    def click_first_hotel(self):
+        first_hotel = WebDriverWait(self.driver, 10).until(
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, '[data-testid="property-card"] [data-testid="title-link"]')
+            )
+        )
+        first_hotel.click()
