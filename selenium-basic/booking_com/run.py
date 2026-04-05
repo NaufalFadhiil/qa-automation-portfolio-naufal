@@ -35,7 +35,7 @@ bot.pets_toggle()
 bot.done_button()
 bot.click_search()
 
-# bot.exit_modals() # Un-Comment if there is a popup modal 
+# bot.exit_modals() # Un-Comment if there is a popup modal
 
 bot.apply_filtration()
 

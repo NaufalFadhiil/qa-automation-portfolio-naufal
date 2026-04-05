@@ -1,10 +1,11 @@
 import time
-from selenium.webdriver.support.ui import Select
+
+from booking.booking_filtration import BookingFiltration
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from booking.booking_filtration import BookingFiltration
+from selenium.webdriver.support.ui import Select, WebDriverWait
+
 
 class Booking(webdriver.Chrome):
     def __init__(self, teardown=False):
@@ -22,27 +23,36 @@ class Booking(webdriver.Chrome):
 
     def exit_modals(self):
         exit_modals = WebDriverWait(self, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[aria-label="Dismiss sign-in info."]')
-        ))
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, 'button[aria-label="Dismiss sign-in info."]')
+            )
+        )
         exit_modals.click()
 
-    def change_currency(self, currency = "IDR"):
-        change_currency = self.find_element(By.CSS_SELECTOR, '[data-testid="header-currency-picker-trigger"]')
+    def change_currency(self, currency):
+        change_currency = self.find_element(
+            By.CSS_SELECTOR,
+            '[data-testid="header-currency-picker-trigger"]'
+        )
         change_currency.click()
-            
+
         quit_currency = WebDriverWait(self, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, '[data-testid="selection-modal-close"]')
-        )) 
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, '[data-testid="selection-modal-close"]')
+            )
+        )
         quit_currency.click()
 
     def select_place_to_go(self, place_to_go):
-        search_field = self.find_element(By.NAME, 'ss')
-        search_field.clear() 
+        search_field = self.find_element(By.NAME, "ss")
+        search_field.clear()
         search_field.send_keys(place_to_go)
 
         first_result = WebDriverWait(self, 10).until(
-            EC.presence_of_all_elements_located((By.CSS_SELECTOR, '[data-testid="autocomplete-result"]')
-        ))
+            EC.presence_of_all_elements_located(
+                (By.CSS_SELECTOR, '[data-testid="autocomplete-result"]')
+            )
+        )
 
         for result in first_result:
             if place_to_go.lower() in result.text.lower():
@@ -50,59 +60,69 @@ class Booking(webdriver.Chrome):
                 break
 
     def select_dates(self, check_in_date, check_out_date):
-        check_in_element = self.find_element(By.CSS_SELECTOR, f'[data-date="{check_in_date}"]')
+        check_in_element = self.find_element(
+            By.CSS_SELECTOR, f'[data-date="{check_in_date}"]'
+        )
         check_in_element.click()
 
-        check_out_element = self.find_element(By.CSS_SELECTOR, f'[data-date="{check_out_date}"]')
+        check_out_element = self.find_element(
+            By.CSS_SELECTOR, f'[data-date="{check_out_date}"]'
+        )
         check_out_element.click()
         time.sleep(1)
 
     def select_guest(self, adults, children, children_age, rooms):
         selection_element = WebDriverWait(self, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='occupancy-config']"))
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, "[data-testid='occupancy-config']")
+            )
         )
         selection_element.click()
 
         adults_container = WebDriverWait(self, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//input[@id='group_adults']/.."))
+            EC.presence_of_element_located(
+                (By.XPATH, "//input[@id='group_adults']/..")
+            )
         )
 
-        adults_value_element = self.find_element(By.ID, 'group_adults')
+        adults_value_element = self.find_element(By.ID, "group_adults")
 
         buttons = adults_container.find_elements(By.TAG_NAME, "button")
         decrease_button = buttons[0]
         increase_button = buttons[1]
 
         while True:
-            current_value = int(adults_value_element.get_attribute('value'))
+            current_value = int(adults_value_element.get_attribute("value"))
             if current_value == 1:
                 break
             decrease_button.click()
 
         while True:
-            current_value = int(adults_value_element.get_attribute('value'))
+            current_value = int(adults_value_element.get_attribute("value"))
             if current_value == adults:
                 break
             increase_button.click()
 
         child_container = WebDriverWait(self, 10).until(
-            EC.presence_of_element_located((By.XPATH, "//input[@id='group_children']/.."))
+            EC.presence_of_element_located(
+                (By.XPATH, "//input[@id='group_children']/..")
+            )
         )
 
-        child_value_element = self.find_element(By.ID, 'group_children')
+        child_value_element = self.find_element(By.ID, "group_children")
 
         buttons = child_container.find_elements(By.TAG_NAME, "button")
         decrease_button = buttons[0]
         increase_button = buttons[1]
 
         while True:
-            current_value = int(child_value_element.get_attribute('value'))
+            current_value = int(child_value_element.get_attribute("value"))
             if current_value == 0:
                 break
             decrease_button.click()
-        
+
         while True:
-            current_value = int(child_value_element.get_attribute('value'))
+            current_value = int(child_value_element.get_attribute("value"))
             if current_value == children:
                 break
             increase_button.click()
@@ -110,18 +130,24 @@ class Booking(webdriver.Chrome):
         # Children Age Selection
         if children:
             selection_element = WebDriverWait(self, 10).until(
-                EC.element_to_be_clickable((By.CSS_SELECTOR, "[data-testid='occupancy-config']"))
+                EC.element_to_be_clickable(
+                    (By.CSS_SELECTOR, "[data-testid='occupancy-config']")
+                )
             )
 
             age_selects = WebDriverWait(self, 10).until(
-                EC.presence_of_all_elements_located((By.NAME, 'age'))
+                EC.presence_of_all_elements_located(
+                    (By.NAME, "age")
+                )
             )
 
             assert len(age_selects) == children
 
             for i in range(children):
                 age_selects = WebDriverWait(self, 10).until(
-                    EC.presence_of_all_elements_located((By.NAME, 'age'))
+                    EC.presence_of_all_elements_located(
+                        (By.NAME, "age")
+                    )
                 )
 
                 element = age_selects[i]
@@ -135,7 +161,8 @@ class Booking(webdriver.Chrome):
                 Select(element).select_by_value(str(children_age[i]))
 
                 WebDriverWait(self, 5).until(
-                    lambda d: age_selects[i].get_attribute("value") == str(children_age[i])
+                    lambda _: age_selects[i].get_attribute("value")
+                    == str(children_age[i])
                 )
 
                 time.sleep(1)
@@ -144,13 +171,17 @@ class Booking(webdriver.Chrome):
             EC.presence_of_element_located((By.ID, "no_rooms"))
         )
 
-        rooms_container = rooms_input.find_element(By.XPATH, "./ancestor::div[1]")
+        rooms_container = rooms_input.find_element(
+            By.XPATH,
+            "./ancestor::div[1]"
+        )
 
         buttons = rooms_container.find_elements(By.TAG_NAME, "button")
         decrease_button = buttons[0]
         increase_button = buttons[1]
 
-        get_value = lambda: int(rooms_input.get_attribute("value"))
+        def get_value():
+            return int(rooms_input.get_attribute("value"))
 
         while get_value() > 1:
             decrease_button.click()
@@ -162,20 +193,26 @@ class Booking(webdriver.Chrome):
 
     def pets_toggle(self):
         toggle = WebDriverWait(self, 5).until(
-            EC.presence_of_element_located((By.XPATH, '//label[@for="pets"]'))
+            EC.presence_of_element_located(
+                (By.XPATH, '//label[@for="pets"]')
+            )
         )
         toggle.click()
 
     def done_button(self):
         done_button = WebDriverWait(self, 10).until(
-            EC.element_to_be_clickable((By.XPATH, '//button[.//span[text()="Done"]]'))
+            EC.element_to_be_clickable(
+                (By.XPATH, '//button[.//span[text()="Done"]]')
+            )
         )
         time.sleep(1)
         done_button.click()
-    
+
     def click_search(self):
         search_button = WebDriverWait(self, 10).until(
-            EC.element_to_be_clickable((By.CSS_SELECTOR, 'button[type="submit"]'))
+            EC.element_to_be_clickable(
+                (By.CSS_SELECTOR, 'button[type="submit"]')
+            )
         )
         search_button.click()
 
