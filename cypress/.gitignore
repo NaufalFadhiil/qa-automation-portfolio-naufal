@@ -2,7 +2,5 @@ node_modules/
 cypress/videos/
 cypress/screenshots/
 
-fixtures/
-support/
 1-getting-started/
 2-advanced-examples/
