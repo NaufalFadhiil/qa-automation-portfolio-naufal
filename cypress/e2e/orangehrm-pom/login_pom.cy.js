@@ -1,5 +1,6 @@
 import LoginPage from '../../support/PageObjects/loginPage'
 import DashboardPage from '../../support/PageObjects/Dashboard'
+import loginData from '../../fixtures/loginData.json'
 
 describe('OrangeHRM Login with POM', () => {
     
@@ -13,22 +14,30 @@ describe('OrangeHRM Login with POM', () => {
     it('TC_LOGIN_001 - Login dengan kredensial valid', () => {
         cy.intercept('GET', '**/time-at-work**').as('timeAtWork')
 
-        loginPage.login('Admin', 'admin123')
+        loginPage.login(
+            loginData.validUsername,
+            loginData.validPassword
+        )
         dashboardPage.verifyDashboard()
 
         cy.wait('@timeAtWork').its('response.statusCode').should('eq', 200)
     })
 
     it('TC_LOGIN_002 - Login dengan password salah', () => {
-        loginPage.login('Admin', 'salah123')
-        
+        loginPage.login(
+            loginData.validUsername,
+            loginData.invalidPassword
+        )        
         loginPage.getErrorMessage().should('be.visible')
 
         cy.url().should('include', '/auth/login')
     })
 
     it('TC_LOGIN_003 - Login dengan username salah', () => {
-        loginPage.login('Salah', 'admin123')
+        loginPage.login(
+            loginData.invalidUsername,
+            loginData.validPassword
+        )
         
         loginPage.getErrorMessage().should('be.visible')
 
@@ -36,13 +45,19 @@ describe('OrangeHRM Login with POM', () => {
     })
 
     it('TC_LOGIN_004 - Login tanpa username', () => {
-        loginPage.login('', 'admin123')
+        loginPage.login(
+            '', 
+            loginData.validPassword
+        )
         
         loginPage.getRequiredMessage().should('be.visible')
     })
 
     it('TC_LOGIN_005 - Login tanpa password', () => {
-        loginPage.login('Admin', '')
+        loginPage.login(
+            loginData.validUsername, 
+            ''
+        )
 
         loginPage.getRequiredMessage().should('be.visible')
     })
