@@ -192,6 +192,6 @@ Ke depannya repository ini akan terus dikembangkan dengan:
 
 ---
 
-✍️ Author: Naufal Fadhiil
-🎓 Informatics Engineering Student - Widyatama University
-📅 Last Updated: May 2026
+✍️ Author: Naufal Fadhiil </br>
+🎓 Informatics Engineering Student - Widyatama University </br>
+📅 Last Updated: May 2026 
